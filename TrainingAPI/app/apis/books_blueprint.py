@@ -46,12 +46,13 @@ async def get_all_books(request):
 @openapi.tag('Books')
 @openapi.summary('Create a book')
 @openapi.description('Create a book in database')
+@openapi.body({'application/json': create_book_json_schema})
 # -----
 # Middleware for validate JWT
 # @protected  # TODO: Authenticate
 # -----
 # Validate data from request
-@validate(json=create_book_json_schema)
+@validate_with_jsonschema(jsonschema=create_book_json_schema)
 # -----
 async def create_book(request, username=None):
     body = request.json
