@@ -9,14 +9,6 @@ from app.misc.log import log
 from config import Config, LocalDBConfig
 
 app = create_app(Config, LocalDBConfig)
-app.ext.openapi.add_security_scheme('Authorization', 'apiKey', location='header', name='Authorization')
-
-redis = SanicRedis()
-
-redis.init_app(app)
-
-app.blueprint(api)
-
 
 @app.route("/", methods={'GET'})
 async def hello_world(request):

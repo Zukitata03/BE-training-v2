@@ -6,28 +6,115 @@ A simple Web Server to build a Book Archive.
 Users can add any books to the archive and manage their books, by updating and deleting. 
 And everyone can view all books in the archive.
 
-<p align="center">
-    <img src="../docs/images/user_case.png" alt="Use Case Diagram" width="600"/>
-</p>
+![Use Case Diagram](../docs/images/user_case.png)
 
 ## Setup
 
-Copy file `.env.example` to `.env` and change the following lines according to database settings:
-```
+1. Copy file `.env.example` to `.env` and change the following lines according to your preferred database settings.
+   - If you want to run the app locally (without Docker) and connect to a local MongoDB instance, set:
+
+```dotenv
 MONGO_CONNECTION_URL=mongodb://localhost:27017/
 MONGO_DATABASE=example_db
 ```
 
-Install dependencies:
-* (Optional) Create virtual environment `venv`
+   - If you plan to run with the bundled Mongo container (via Docker Compose), you can keep defaults in `.env` or customize:
+
+```dotenv
+MONGO_INITDB_ROOT_USERNAME=mongo_root
+MONGO_INITDB_ROOT_PASSWORD=mongo_pass
+MONGO_INITDB_DATABASE=training_db
 ```
-$ python3 -m venv venv
-$ source venv/bin/activate
+
+   - Optional override for Dockerized app to connect to a host Mongo instance instead of the bundled container:
+
+```dotenv
+# Example (macOS/Windows Docker):
+# MONGO_URI=mongodb://host.docker.internal:27017/training_db
+# Or on Linux use host IP such as mongodb://172.17.0.1:27017/training_db
 ```
-* Install requirement libraries
+
+   Notes / assumptions:
+   - The repository provides both `MONGO_CONNECTION_URL` (used by local runs) and the `MONGO_INITDB_*` variables (used to initialize the containerized Mongo). If you set `MONGO_URI` the application is expected to prefer it over the default connection string. If the app does not currently read `MONGO_URI`, adapt your `.env` to supply the connection key your code expects (see `config.py`).
+   - On Linux `host.docker.internal` may not be available; use the host's Docker bridge IP (for example `172.17.0.1`) or run the app outside Docker.
+
+
+### Environment for Docker Compose
+
+When running the project with Docker Compose, the application and the bundled MongoDB container are configured using environment variables from a `.env` file at the project root. Copy `.env.example` to `.env` and adjust any values below as needed.
+
+Recommended variables for Compose (put these in `.env`):
+
+```dotenv
+# App server
+SERVER_HOST=0.0.0.0
+SERVER_PORT=8080
+
+# Initialize the bundled MongoDB container (used only if you run the `mongo` service)
+MONGO_INITDB_ROOT_USERNAME=mongo_root
+MONGO_INITDB_ROOT_PASSWORD=mongo_pass
+MONGO_INITDB_DATABASE=training_db
+
+# Optional: Force the app to use an external Mongo instance instead of the bundled container
+# Example for Docker Desktop on macOS/Windows:
+# MONGO_URI=mongodb://host.docker.internal:27017/training_db
+# Example for Linux if host.docker.internal is unavailable (replace with your host gateway IP):
+# MONGO_URI=mongodb://172.17.0.1:27017/training_db
+
+# Optional: expose the Mongo container port to the host (use with caution)
+# MONGO_PORT_MAPPING=27017:27017
 ```
-$ pip3 install -r requirements.txt
+
+How these variables are used:
+- If `MONGO_URI` is set, configure the application to prefer it (this lets the app connect to a host Mongo instead of the container).
+- If `MONGO_URI` is unset, the app should connect to the internal `mongo` service (the connection string inside Docker typically looks like `mongodb://mongo:27017/<db>`).
+- `MONGO_INITDB_*` variables are consumed by the official Mongo image to create the initial database and root user when the container is first started.
+- `MONGO_PORT_MAPPING` is optional; if you set it and want the container to publish the port, add a `ports: - ${MONGO_PORT_MAPPING}` mapping to the `mongo` service in `docker-compose.yml` or use an override file.
+
+2. (Optional) Create and activate a virtual environment, then install dependencies:
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r requirements.txt
 ```
+
+3. Run the application directly (without Docker):
+
+```bash
+python3 main.py
+# or use your preferred command/run configuration depending on how the app is wired in main.py
+```
+
+## Run with Docker Compose (recommended for training)
+
+The project includes a `docker-compose.yml` that can start the API service and an optional MongoDB service. The compose file is configured to NOT publish MongoDB's 27017 port by default to avoid port conflicts if you already have Mongo running on your host.
+
+Basic commands:
+
+```bash
+# Build images and start services in foreground
+docker compose up --build
+
+# Build images and start services in background (detached)
+docker compose up -d --build
+
+# Stop and remove containers created by compose
+docker compose down
+```
+
+If you want the app container to use a Mongo instance running on your host (instead of the bundled container):
+- Set `MONGO_URI` in `.env` to point to your host Mongo (example above).
+- Then start the app container only and avoid starting the bundled mongo service if you like:
+
+```bash
+# Start the app service only, do not start linked services
+docker compose up --build --no-deps app
+```
+
+Notes:
+- `--no-deps` prevents Compose from starting service dependencies. Use it only when you are sure the app can reach the DB you configured via `MONGO_URI`.
+- If you need to expose the Mongo container to the host (e.g., for DB GUI tools), you can add a port mapping in `docker-compose.yml` or create an override file to map `27017:27017`. Be careful: exposing the container port may conflict with an existing host Mongo.
 
 ## Framework Sanic
 
@@ -51,7 +138,7 @@ $ pip3 install -r requirements.txt
 
 ## Database
 
-*Reference: [1.Databases](../../1.Databases)*
+- Reference: Databases
 
 * Use `MongoDB` database and `PyMongo` library
 * Database design: [collections](../docs/database_models/collections.json)
@@ -107,9 +194,7 @@ $ pip3 install -r requirements.txt
 
 [//]: # (![JWT]&#40;../docs/images/jwt.png&#41;)
 
-<p align="center">
-    <img src="../docs/images/jwt.png" alt="JWT" width="700"/>
-</p>
+![JWT](../docs/images/jwt.png)
 
 > Task 5:
 > 
@@ -136,12 +221,31 @@ $ pip3 install -r requirements.txt
 ## Docker
 > Task 7:
 > 
-> * Read and explain file: Dockerfile and docker-compose.yml
-> * Change connect url database for run by docker:
->   * Ex: 
->   * - find ip local by cmd: ifconfig. ex: 192.123.1.56
->   * - Change connect url database to mongodb://192.123.1.56:27017
->   * - Add to BindIp field of mongo setting file: bindIp: 127.0.0.1, 192.168.1.32
-> * Run docker-compose up.
-
-
+> * Goal: Read and understand the project's `docker-compose.yml` file (no changes to network or MongoDB configuration required).
+> * While reading, pay attention to and be able to explain the following items:
+>   - The `services` defined (for example `app`, `mongo`) and the role of each service.
+>   - The difference between `build:` and `image:` in a service definition.
+>   - The purpose of `env_file:` and important environment variables related to MongoDB (e.g. `MONGO_INITDB_*`, `MONGO_URI`).
+>   - How `volumes:` are used to persist data (for example `./data/mongo:/data/db`).
+>   - `ports:` and why the MongoDB port (27017) might intentionally NOT be mapped to the host by default.
+>   - The role of `depends_on:`, `restart:`, and `healthcheck:` (if present) and why they matter.
+>   - The `networks:` section and how services communicate by service name within the same network.
+> * After reading, answer briefly (1-3 sentences) for each of the following:
+>   1. Where will the app connect to Mongo when running with Compose? (example: `mongodb://mongo:27017/<db>`)
+>   2. If you want to access Mongo from the host (for example with MongoDB Compass), what needs to be changed in the compose file or environment?
+>   3. Why is it not recommended to copy an IP from `ifconfig` into the connection string for Compose deployments?
+> 
+> Useful commands to inspect and run the compose stack:
+> ```bash
+> # View the merged compose configuration
+> docker compose config
+>
+> # Build images and start services in the foreground
+> docker compose up --build
+>
+> # Build and start services in detached mode
+> docker compose up -d --build
+>
+> # Stop and remove containers
+> docker compose down
+> ```
