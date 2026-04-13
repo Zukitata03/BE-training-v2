@@ -23,7 +23,7 @@ MVC is an architectural pattern which means it rules the whole architecture of t
 [//]: # (![MVC Architecture]&#40;images/mvc.png&#41;)
 
 <p align="center">
-    <img src="docs/images/mvc.png" alt="MVC Architecture" width="400"/>
+    <img src="docs/images/mvc.png" alt="MVC Architecture" width="900"/>
 </p>
 
 * Model: Contains all the objects that describe the data such as classes, data processing methods, and is responsible for accessing data on the database.
@@ -39,7 +39,7 @@ MVC is an architectural pattern which means it rules the whole architecture of t
 [//]: # (![HTTP Request]&#40;images/http_request.png&#41;)
 
 <p align="center">
-    <img src="docs/images/http_request.png" alt="HTTP Request" width="500"/>
+    <img src="docs/images/http_request.png" alt="HTTP Request" width="693"/>
 </p>
 
 Requests consist of the following elements:
@@ -59,7 +59,7 @@ Requests consist of the following elements:
 [//]: # (![HTTP Response]&#40;images/http_response.png&#41;)
 
 <p align="center">
-    <img src="docs/images/http_response.png" alt="HTTP Response" width="500"/>
+    <img src="docs/images/http_response.png" alt="HTTP Response" width="758"/>
 </p>
 
 Responses consist of the following elements:
@@ -266,5 +266,3 @@ Next steps đề xuất cho repo này
 - Thêm mẫu GitHub Actions workflow và Dockerfile tối ưu (nếu chưa có)
 
 ---
-
-Chúc bạn học tốt! Nếu muốn, tôi có thể: tạo các file `docs/modules/*.md` từ nội dung trên, hoặc ngay lập tức thêm Dockerfile/GitHub Actions mẫu vào repo. Chọn 1 việc tiếp theo bạn muốn tôi làm.

@@ -43,8 +43,8 @@ Dưới đây là các vấn đề bảo mật phổ biến theo OWASP Top 10 (t
    - Phòng chống: dependency scanning (Snyk, Dependabot), cập nhật định kỳ, minimal dependencies.
 
 10. Insufficient Logging & Monitoring
-   - Vấn đề: không phát hiện được hành vi tấn công kịp thời.
-   - Phòng chống: structured logging, alerting, central log aggregation, không log secrets.
+    - Vấn đề: không phát hiện được hành vi tấn công kịp thời.
+    - Phòng chống: structured logging, alerting, central log aggregation, không log secrets.
 
 ## Cách ứng dụng — Cấu hình và ví dụ thực tế
 

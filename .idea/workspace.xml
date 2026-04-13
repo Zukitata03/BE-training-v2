@@ -2,24 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1a3506ff-ac6b-4999-97f4-c8f558e4f222" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.ask2agent.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/images/client_server.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/modules/img.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/modules/module-01-basics.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/modules/module-02-datamodeling.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/modules/module-03-auth.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/modules/module-04-security.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/modules/module-05-performance.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/modules/module-06-resilience.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/modules/module-07-testing.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/modules/module-08-cicd.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/modules/module-09-observability.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/modules/module-10-advanced.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TrainingAPI/app/apis/books_blueprint.py" beforeDir="false" afterPath="$PROJECT_DIR$/TrainingAPI/app/apis/books_blueprint.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/modules/module-04-security.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/modules/module-04-security.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,17 +26,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "/home/haolv/Desktop/Backend/BE-training/TrainingAPI",
-    "to.speed.mode.migration.done": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat/v1&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/haolv/Desktop/Backend/BE-training/TrainingAPI&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
