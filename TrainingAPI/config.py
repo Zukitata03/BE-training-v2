@@ -10,12 +10,20 @@ class Config:
     RUN_SETTING = {
         'host': os.environ.get('SERVER_HOST', 'localhost'),
         'port': int(os.environ.get('SERVER_PORT', 8080)),
-        'debug': False,
-        "access_log": True,
+        'debug': os.getenv('DEBUG', False),
+        "access_log": False,
         "auto_reload": True,
-        'workers': 1
+        'workers': int(os.getenv('SERVER_WORKERS', 4))
     }
     # uWSGI를 통해 배포되어야 하므로, production level에선 run setting을 건드리지 않음
+
+    RESPONSE_TIMEOUT = 20  # seconds
+
+    SERVER_NAME = os.getenv('SERVER_NAME')
+    raw = {}
+    if SERVER_NAME:
+        raw['servers'] = [{'url': SERVER_NAME}]
+
     FALLBACK_ERROR_FORMAT = 'json'
 
     OAS_UI_DEFAULT = 'swagger'
@@ -25,22 +33,23 @@ class Config:
         'operationsSorter': "alpha"
     }
 
-    SECRET_KEY = os.getenv('SECRET_KEY', '85c145a16bd6f6e1f3e104ca78c6a102')
-    EXPIRATION_JWT = 3600  # seconds
-
-    REDIS = 'redis://localhost:6379/0'
-
-    API_HOST = os.getenv('API_HOST', '0.0.0.0:8080')
+    API_HOST = os.getenv('API_HOST', '0.0.0.0:8096')
+    API_BASEPATH = os.getenv('API_BASEPATH', '')
     API_SCHEMES = os.getenv('API_SCHEMES', 'http')
-    API_VERSION = os.getenv('API_VERSION', '0.1.0')
-    API_TITLE = os.getenv('API_TITLE', 'Demo API')
+    API_VERSION = os.getenv('API_VERSION', '0.0.1')
+    API_TITLE = os.getenv('API_TITLE', 'Backend API')
+    API_DESCRIPTION = os.getenv('API_DESCRIPTION', 'Swagger for Backend API')
     API_CONTACT_EMAIL = os.getenv('API_CONTACT_EMAIL', 'example@gmail.com')
 
-    API_DESCRIPTION = os.getenv('API_DESCRIPTION', dedent(
-        """
-        ## Explore the API
-        """
-    ))
+
+class RedisConfig:
+    HOST = os.getenv('REDIS_HOST', 'redis')
+    PORT = int(os.getenv('REDIS_PORT', 6379))
+    DB = int(os.getenv('REDIS_DB', 0))
+    PASSWORD = os.getenv('REDIS_PASSWORD', 'pw')
+
+    CONNECTION_URL = f"redis://:{PASSWORD}@{HOST}:{PORT}/{DB}"
+
 
 class LocalDBConfig:
     pass
