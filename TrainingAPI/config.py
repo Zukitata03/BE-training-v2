@@ -40,7 +40,8 @@ class Config:
     API_TITLE = os.getenv('API_TITLE', 'Backend API')
     API_DESCRIPTION = os.getenv('API_DESCRIPTION', 'Swagger for Backend API')
     API_CONTACT_EMAIL = os.getenv('API_CONTACT_EMAIL', 'example@gmail.com')
-
+    EXPIRATION_JWT = int(os.getenv('EXPIRATION_JWT', 36000))
+    SECRET_KEY = os.getenv('SECRET_KEY', 'secret_key')
 
 class RedisConfig:
     HOST = os.getenv('REDIS_HOST', 'redis')

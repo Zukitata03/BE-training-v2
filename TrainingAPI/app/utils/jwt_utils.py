@@ -13,7 +13,8 @@ def generate_jwt(username, role='user'):
             "role": role,
             "exp": expiration_time
         }, 
-        Config.SECRET_KEY
+        Config.SECRET_KEY,
+        algorithm="HS256"
     )
 
     return token

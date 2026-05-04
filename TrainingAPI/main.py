@@ -1,7 +1,7 @@
 import os
 
 from sanic.response import text
-from sanic_redis import SanicRedis
+from redis.asyncio import Redis
 
 from app import create_app
 from app.apis import api

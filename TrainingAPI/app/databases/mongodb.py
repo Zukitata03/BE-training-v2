@@ -12,12 +12,25 @@ class MongoDB:
     def __init__(self, connection_url=None):
         if connection_url is None:
             connection_url = MongoDBConfig.CONNECTION_URL
-
+        print("DEBUG:", MongoDBConfig.CONNECTION_URL)
         self.connection_url = connection_url.split('@')[-1]
         self.client = MongoClient(connection_url)
         self.db = self.client[MongoDBConfig.DATABASE]
 
         self._books_col = self.db[MongoCollections.books]
+        self._users_col = self.db[MongoCollections.users]
+    def get_user_by_username(self, username: str):
+        try:
+            return self._users_col.find_one({'_id': username})
+        except Exception as ex:
+            logger.exception(ex)
+        return None
+
+    def create_user(self, username: str, password_hash: str):
+        return self._users_col.insert_one({
+            '_id': username,
+            'password_hash': password_hash
+        })
 
     def get_books(self, filter_=None, projection=None):
         try:
@@ -32,12 +45,42 @@ class MongoDB:
             logger.exception(ex)
         return []
 
-    # def add_book(self, book: Book):
-    #     try:
-    #         inserted_doc = self._books_col.insert_one(book.to_dict())
-    #         return inserted_doc
-    #     except Exception as ex:
-    #         logger.exception(ex)
-    #     return None
+    def add_book(self, book: Book):
+        try:
+            inserted_doc = self._books_col.insert_one(book.to_dict())
+            return inserted_doc
+        except Exception as ex:
+            logger.exception(ex)
+        return None
+    
+    def get_book_by_id(self, book_id: str):
+        try:
+            book = self._books_col.find_one({'_id': book_id})
+            return Book().from_dict(book)
+        except Exception as ex:
+            logger.exception(ex)
+        return None
 
+    def update_book_by_id(self, book_id: str, book: Book):
+        try:
+            updated_book = self._books_col.update_one({'_id': book_id}, {'$set': {
+                'title': book.title,
+                'authors': book.authors,
+                'publisher': book.publisher,
+                'description': book.description,
+                'owner': book.owner,
+                'lastUpdatedAt': book.last_updated_at
+            }})
+            return updated_book
+        except Exception as ex:
+            logger.exception(ex)
+        return None
+
+    def delete_book_by_id(self, book_id: str):
+        try:
+            deleted_book = self._books_col.delete_one({'_id': book_id})
+            return deleted_book
+        except Exception as ex:
+            logger.exception(ex)
+        return None
     # TODO: write functions CRUD with books

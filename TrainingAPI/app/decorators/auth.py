@@ -3,10 +3,14 @@ import jwt
 
 from config import Config
 from app.hooks.error import ApiUnauthorized
-
+def _bearer_token(request):
+    auth = request.headers.get("Authorization", "")
+    if auth.lower().startswith("bearer "):
+        return auth[7:].strip() or None
+    return None
 
 def check_token(request):
-    token = request.token
+    token = _bearer_token(request)
     if not token:
         return False, None
 
