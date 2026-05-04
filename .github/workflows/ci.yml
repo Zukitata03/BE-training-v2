@@ -38,3 +38,4 @@ jobs:
           REDIS_HOST: 127.0.0.1
           REDIS_PASSWORD: pw
           SECRET_KEY: ci-not-secret
+          SERVER_NAME: localhost:8000
